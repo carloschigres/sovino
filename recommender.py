@@ -320,6 +320,14 @@ if st.button('Recomendar'):
     #--- Atribui a coluna [score]; lembrando que scores é uma lista ---
     df_recom.score = scores
 
+    #--- Precisa verificar se existe algo a apresentar !!
+    #--- Erro verificado em 15/09/2020
+    tam_temp = df_recom.shape[0]
+
+    if tam_temp == 0:
+        st.write('Lamentamos informar que sua seleção não retornou resultados. Tente novamente!')
+        st.stop()
+
     #--- FIM da Iteracao ---
     #-----------------------------------------------------
     #  ***  Construindo o formato do Resultado Final   ***
