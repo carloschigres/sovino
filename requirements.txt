@@ -2,7 +2,7 @@ pandas
 numpy 
 nltk
 stopwords
-sklearn.feature_extraction.text
+request TfidfVectorizer
 sklearn.metrics.pairwise
 streamlit 
 Image
