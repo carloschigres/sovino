@@ -230,7 +230,7 @@ if st.button('Recomendar'):
     # de palavras como parametro. Dessa forma, vamos gerar as stopwords em Portugues, usando o NLTK.
 
     # Armazena as stop words em Portugues em uma variavel
-    stopwords = set(stopwords.words('Portuguese'))
+    stopwords = set(stopwords.words('portuguese'))
     # Lembrando que set() remove itens duplicados !
 
     #--- Inserindo uma coluna para score
