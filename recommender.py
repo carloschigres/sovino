@@ -216,6 +216,7 @@ if st.button('Recomendar'):
 
     if tam_temp == 0:
         st.write('Lamentamos informar que sua seleção não retornou resultados. Tente novamente!')
+        st.stop()
     else:
         st.write('Sua Seleção de Consumo é apresentada abaixo:')
         df_temp  #
@@ -320,7 +321,6 @@ if st.button('Recomendar'):
     df_recom.score = scores
 
     #--- FIM da Iteracao ---
-
     #-----------------------------------------------------
     #  ***  Construindo o formato do Resultado Final   ***
     #-----------------------------------------------------
@@ -333,7 +333,7 @@ if st.button('Recomendar'):
 
     # Funcao para reordenar o dataset, dentro de cada ['uva1']
     df_variet = build_recom(df_tmp)
-            
+                
     #============================================
     # Aplicacao do Filtro Final - Somente Blend #
     #============================================
@@ -359,6 +359,7 @@ if st.button('Recomendar'):
 
     if tam_resul == 0:
         st.write('Lamentamos informar que a Recomendação não retornou resultados. Tente novamente!')
+        st.stop() 
     else:
         st.write('Sua Recomendação é apresentada abaixo:')
         df_resultado  #
