@@ -2,7 +2,6 @@ pandas
 numpy 
 nltk
 stopwords
-request TfidfVectorizer
-sklearn.metrics.pairwise
+sklearn
 streamlit 
 Image
