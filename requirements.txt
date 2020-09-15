@@ -1,0 +1,8 @@
+pandas 
+numpy 
+nltk
+stopwords
+TfidfVectorizer
+cosine_similarity
+streamlit 
+Image
