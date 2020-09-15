@@ -117,24 +117,72 @@ def favalcosine(medida,idx):
 ###############################
 #  Comandos STREAMLIT - Titulo
 ###############################
-st.title('Sistema de Recomendação de Vinhos')
+st.title('Ramon Project')
+
+############################
+# Intro 1
+############################
+st.subheader('Olá! Me chamo Ramon Viño! Sou uma IA criada para recomendar vinhos, um sommelier virtual disponível 24 horas por dia, 7 dias por semana. Fui criado pra entender as suas preferências e te indicar os rótulos que se encaixem perfeitamente com elas. ')
 
 ############################
 # Adicionar Imagem
 ############################
-img = Image.open('Chateaux.jpg')
-st.image(img, caption='Bordeaux',use_column_width=True)
+img = Image.open('somme.jpeg')
+st.image(img, use_column_width=True)
+
+############################
+# Intro 2
+############################
+st.subheader('Abaixo tenho algumas perguntas para te conhecer melhor e outras que podem ser respondidas com base nas informações de um rótulo que te marcou muito, ou nas preferências de consumo que você tem para o momento. Vamos lá!')
 
 ############################
 # Inicio da Selecao
 ############################
-st.subheader('Forneça as características do(s) vinho(s) desejado(s).')
+
+############################
+# Nome
+############################
+st.write(""" ## Quais são seus dois primeiros nomes? """)
+nome = st.text_input('',key='name')
+
+############################
+# Idade
+############################
+st.write( """ Qual a sua idade ? """)
+idade = st.text_input(' ',key='age')
+
+############################
+# Sexo
+############################
+st.write( """ Sexo ? """)
+sexo = st.selectbox(" ",('Masculino','Feminino'))
+
+############################
+# E-MAIL
+############################
+st.write( """ Qual o seu E-MAIL ? """)
+email = st.text_input(' ',key='email')
+
+############################
+# Intro 3
+############################
+st.subheader('Maravilha!')
+
+st.write(nome ,',agora vamos ao vinho!')
+
+############################
+# Adicionar Imagem 2
+############################
+img = Image.open('wines.jpeg')
+st.image(img,use_column_width=True)
+
+st.write('Lembre que pode ser um rotúlo que marcou você positivamente ou uma preferência atual, posso te ajudar das duas formas. Vamos lá!')
 
 ############################
 # Seleção de Pais
 ############################
 st.write("""
-    ### Por favor, selecione o Pais.
+    ### Selecione o país do vinho.
     """)
 sel_pais = st.selectbox('Paises' , paises )
 
@@ -142,7 +190,7 @@ sel_pais = st.selectbox('Paises' , paises )
 # Seleção de Tipo
 ############################
 st.write("""
-    ### Por favor, selecione o Tipo.
+    ### Selecione o tipo.
     """)
 sel_tipo = st.selectbox('Tipos' , tipos )
 
@@ -150,30 +198,27 @@ sel_tipo = st.selectbox('Tipos' , tipos )
 # Seleção de Descricao
 ############################
 st.write("""
-    ### Por favor, selecione a Descrição.
+    ### Agora, a descrição.
     """)
 sel_desc = st.selectbox('Descrição' , descricao )
 
 ############################
-# Seleção de Varietais
+# Seleção de Uvas
 ############################
 st.write("""
-    ### Por favor, selecione os Varietais.
+    ### Selecione a Uva.
     """)
-sel_uvas = st.selectbox( 'Varietais', uvas )    
+sel_uvas = st.selectbox( 'Caso seja mais de uma uva (blend), selecione alguma que estava ou pode estar na composição', uvas )    
 # sel_uvas = st.multiselect( 'Por Favor, selecione os Varietais.', uvas )    
 # st.write('sua selecao:' , sel_uvas )
-
-############################
-# Range de Preços - Slider
-############################
-preco_de = st.slider('Escolha o preco inicial',0,500,0,10)
-preco_ate = st.slider('Escolha o preco final',preco_de,500,preco_de,10)
 
 ##########################################
 # Parametro limite - grau de similaridade
 ##########################################
-par_limite = st.slider('Grau de Similaridade',0.50,1.00,0.50)
+st.write("""
+    ### Em um grau de similaridade onde 0,5 é ‘similar’ e 1 ‘muito similar’, como você gostaria da minha recomendação? 
+    """)
+par_limite = st.slider('Grau',0.50,1.00,0.50)
 # st.slider(label, min_value, max_value, value=none, step=none)
 limite = par_limite
 ################################
@@ -184,7 +229,7 @@ limite = par_limite
 ##########################################
 # Botão de Acionamento de todo o modelo
 ##########################################
-if st.button('Recomendar'):
+if st.button('Recomendar Ramon!'):
 
     #--- RESET da preferencia
     dados['consumo'] = 0
@@ -192,9 +237,7 @@ if st.button('Recomendar'):
     #--------------------------
     # Construcao de filtro
     #--------------------------
-    select = (dados.pais == sel_pais) & (dados.tipo == sel_tipo) & (dados.descricao == sel_desc) & (dados.uva1 == sel_uvas) & (dados.price >= preco_de)
-    if preco_ate > 0:
-        select = select & (dados.price <= preco_ate)
+    select = (dados.pais == sel_pais) & (dados.tipo == sel_tipo) & (dados.descricao == sel_desc) & (dados.uva1 == sel_uvas) 
     df_filtro = dados[select]
 
     #=======================================
@@ -217,9 +260,9 @@ if st.button('Recomendar'):
     if tam_temp == 0:
         st.write('Lamentamos informar que sua seleção não retornou resultados. Tente novamente!')
         st.stop()
-    else:
-        st.write('Sua Seleção de Consumo é apresentada abaixo:')
-        df_temp  #
+    # else:
+        # st.write('Sua Seleção de Consumo é apresentada abaixo:')
+        # df_temp  #
 
     #############################################################################################################
     ## Função de Recomendação, baseada no conceito de Vector Space Model, onde um documento de 
@@ -319,6 +362,7 @@ if st.button('Recomendar'):
 
     #--- Atribui a coluna [score]; lembrando que scores é uma lista ---
     df_recom.score = scores
+    #--- FIM da Iteracao ---
 
     #--- Precisa verificar se existe algo a apresentar !!
     #--- Erro verificado em 15/09/2020
@@ -328,7 +372,6 @@ if st.button('Recomendar'):
         st.write('Lamentamos informar que sua seleção não retornou resultados. Tente novamente!')
         st.stop()
 
-    #--- FIM da Iteracao ---
     #-----------------------------------------------------
     #  ***  Construindo o formato do Resultado Final   ***
     #-----------------------------------------------------
