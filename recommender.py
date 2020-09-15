@@ -14,7 +14,6 @@ import numpy as np
 # Natural Languade Tool Kit
 import nltk
 from nltk.corpus import stopwords
-nltk.download('stopwords')
 
 ## TFIDF libraries
 from sklearn.feature_extraction.text import TfidfVectorizer
