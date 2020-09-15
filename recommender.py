@@ -99,9 +99,9 @@ def favalcosine(medida,idx):
     # variavel declarada como global, 12/9/20   limite = 0.65
     result = []
     
-    for cnt in np.arange(10):
+    for cnt in np.arange(20):
     
-        ind = cnt - 10  ## ind vai de -10 até -1 !!  
+        ind = cnt - 20  ## ind vai de -20 até -1 !!  
         index = medida.argsort()[ind] # Retorna os INDICES que ordenam o array. 
         measure = medida[index]       # Como a ordem é ascendente, precisa começar do final do array. 
 
@@ -238,7 +238,7 @@ if st.button('Recomendar Ramon!'):
     # Construcao de filtro
     #--------------------------
     select = (dados.pais == sel_pais) & (dados.tipo == sel_tipo) & (dados.descricao == sel_desc) & (dados.uva1 == sel_uvas) 
-    df_filtro = dados[select]
+    df_filtro = dados[select].sort_values(by=['rating'], ascending=False)
 
     #=======================================
     # Define a posicao da coluna 'consumo'
@@ -246,12 +246,16 @@ if st.button('Recomendar Ramon!'):
     my_idx = dados.columns
     pos_consumo = my_idx.get_loc('consumo')
 
+    times = 2
     for ind, dfseries in df_filtro.iterrows():
         dados.iloc[ind,pos_consumo] = 1
+        times -= 1
+        if times == 0:
+            break
 
     #---- Apresentando a seleção
     select = (dados.consumo == 1)
-    colunas = ['nome','preco','pais','tipo','descricao','uvas','ano']
+    colunas = ['nome','preco','pais','tipo','descricao','uvas','rating']
     df_temp = dados[select][colunas].sort_values(by=['uvas'], ascending=False)
 
     #--- Precisa verificar se existe algo a apresentar !!
