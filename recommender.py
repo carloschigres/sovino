@@ -108,7 +108,7 @@ def favalcosine(medida,idx):
         if index == idx:
             continue
 
-        if (measure > limite):
+        if (measure >= limite):
             result.append([index,measure])
 
     return result
@@ -117,7 +117,7 @@ def favalcosine(medida,idx):
 ###############################
 #  Comandos STREAMLIT - Titulo
 ###############################
-st.title('Ramon Project')
+st.title('Ramon (Beta)')
 
 ############################
 # Intro 1
@@ -127,7 +127,8 @@ st.subheader('Olá! Me chamo Ramon Viño! Sou uma IA criada para recomendar vinh
 ############################
 # Adicionar Imagem
 ############################
-img = Image.open('somme.jpeg')
+# img = Image.open('somme.jpeg')
+img = Image.open('rvlog.png')
 st.image(img, use_column_width=True)
 
 ############################
@@ -142,7 +143,7 @@ st.subheader('Abaixo tenho algumas perguntas para te conhecer melhor e outras qu
 ############################
 # Nome
 ############################
-st.write(""" ## Quais são seus dois primeiros nomes? """)
+st.write(""" Quais são seus dois primeiros nomes? """)
 nome = st.text_input('',key='name')
 
 ############################
@@ -176,13 +177,13 @@ st.write(nome ,',agora vamos ao vinho!')
 img = Image.open('wines.jpeg')
 st.image(img,use_column_width=True)
 
-st.write('Lembre que pode ser um rotúlo que marcou você positivamente ou uma preferência atual, posso te ajudar das duas formas. Vamos lá!')
+st.write('Lembre que pode ser um rotúlo que marcou você positivamente ou uma preferência atual, posso te ajudar das duas formas. Vamos começar!')
 
 ############################
 # Seleção de Pais
 ############################
 st.write("""
-    ### Selecione o país do vinho.
+    ### Selecione o país do vinho
     """)
 sel_pais = st.selectbox('Paises' , paises )
 
@@ -190,7 +191,7 @@ sel_pais = st.selectbox('Paises' , paises )
 # Seleção de Tipo
 ############################
 st.write("""
-    ### Selecione o tipo.
+    ### Selecione o tipo
     """)
 sel_tipo = st.selectbox('Tipos' , tipos )
 
@@ -198,7 +199,7 @@ sel_tipo = st.selectbox('Tipos' , tipos )
 # Seleção de Descricao
 ############################
 st.write("""
-    ### Agora, a descrição.
+    ### Agora, a descrição
     """)
 sel_desc = st.selectbox('Descrição' , descricao )
 
@@ -206,7 +207,7 @@ sel_desc = st.selectbox('Descrição' , descricao )
 # Seleção de Uvas
 ############################
 st.write("""
-    ### Selecione a Uva.
+    ### Selecione a Uva
     """)
 sel_uvas = st.selectbox( 'Caso seja mais de uma uva (blend), selecione alguma que estava ou pode estar na composição', uvas )    
 # sel_uvas = st.multiselect( 'Por Favor, selecione os Varietais.', uvas )    
@@ -266,7 +267,7 @@ if st.button('Recomendar Ramon!'):
         st.stop()
     # else:
         # st.write('Sua Seleção de Consumo é apresentada abaixo:')
-        # df_temp  #
+        # st.table(df_temp) 
 
     #############################################################################################################
     ## Função de Recomendação, baseada no conceito de Vector Space Model, onde um documento de 
@@ -407,7 +408,6 @@ if st.button('Recomendar Ramon!'):
 
     colunas = ['nome','preco','pais','tipo','descricao','uvas','ano','rating','score']
     df_resultado = data_final[colunas]
-    #st.dataframe(my_selection)
 
     #--- Precisa verificar se existe algo a apresentar !!
     tam_resul = df_resultado.shape[0]
@@ -417,4 +417,4 @@ if st.button('Recomendar Ramon!'):
         st.stop() 
     else:
         st.write('Sua Recomendação é apresentada abaixo:')
-        df_resultado  #
+        st.table(df_resultado)  
